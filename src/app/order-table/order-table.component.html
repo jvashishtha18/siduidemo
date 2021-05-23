@@ -1,0 +1,108 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height:50px">
+  </nav>
+  
+
+<div class="container h-100 row align-items-center margin-container">
+   
+    <div class="row orders">
+      <span style="padding-left:16px">  Orders </span>
+        </div>
+    <div class="row">
+        <div class="col-3 ">
+  
+                <input class="serach " type="text" placeholder="Search by any parameter" (keyup)="orderFilter($event)">
+          
+        </div>
+        <div class="col-3 ">
+        
+               
+                <select class="select-status"  (change)="changestatus($event.target)" [(ngModel)]="selectedStatus" >
+                    <option value="All">All</option>
+                    <option value="Out for Delivery">Out for Delivery</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="In Transit">In Transit</option>
+                </select>
+          
+        </div>
+        <div class="col-3">
+            <select class="select-status" [(ngModel)]="selectedWarehouse" (change)="changewareshouse($event.target)">
+                <option value="All">All</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Patna">Patna</option>
+            </select>
+        </div>
+        <div class="col-3 left-padding">
+            <button class="btn-download" (click)="exportProductList()">Export Order</button>
+        </div>
+    </div>
+    <div class="row">
+      
+        <section class="all-order">
+            <input type="checkbox">  All Order
+          </section>
+        </div>
+    
+
+    <div class="table-responsive"> 
+
+        <table id="product_list" class="table bg-white table-striped table-hover table-borderless" mat-table
+ [dataSource]="dataSource">
+<ng-container matColumnDef="ref_id">
+    <td mat-cell *matHeaderCellDef> Ref.ID </td>
+    <td mat-cell *matCellDef="let element">
+        {{element.ref_id}}
+    </td>
+</ng-container>
+<ng-container matColumnDef="tableCheckBox">
+    <td mat-cell *matHeaderCellDef> </td>
+    <td mat-cell *matCellDef="let element">
+        <section>
+            <input type="checkbox">
+          </section>
+    </td>
+</ng-container>
+<ng-container matColumnDef="user">
+    <td mat-cell *matHeaderCellDef> Customer  </td>
+    <td class="values" mat-cell *matCellDef="let element">
+        {{element.user.first_name}} {{element.user.last_name}}
+    </td>
+</ng-container>
+
+<ng-container matColumnDef="date">
+    <td mat-cell *matHeaderCellDef> Date  </td>
+    <td class="values" mat-cell *matCellDef="let element">
+        {{element.date|date}}
+    </td>
+</ng-container>
+
+<ng-container matColumnDef="product">
+    <td mat-cell *matHeaderCellDef> Product(s)  </td>
+    <td mat-cell *matCellDef="let element">
+        {{element.items[0].name}}
+    </td>
+</ng-container>
+
+<ng-container matColumnDef="distribution">
+    <td mat-cell *matHeaderCellDef> Distribution  </td>
+    <td mat-cell *matCellDef="let element">
+        {{element.warehouse}}
+    </td>
+</ng-container>
+<ng-container matColumnDef="status">
+    <td mat-cell *matHeaderCellDef> Status  </td>
+    <td mat-cell *matCellDef="let element">
+        {{element.order_status}}
+    </td>
+</ng-container>
+<ng-container matColumnDef="price">
+    <td mat-cell *matHeaderCellDef> Price  </td>
+    <td mat-cell *matCellDef="let element">
+        {{element.items[0].price}}
+    </td>
+</ng-container>
+<tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+ <tr mat-row *matRowDef="let claim; columns: displayedColumns;" ></tr>
+</table>
+    </div>
+</div>
